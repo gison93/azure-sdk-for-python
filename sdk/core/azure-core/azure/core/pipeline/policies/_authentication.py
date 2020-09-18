@@ -90,8 +90,8 @@ class BearerTokenCredentialPolicy(_BearerTokenCredentialPolicyBase, SansIOHTTPPo
         self._enforce_https(request)
 
         if self._token is None or self._need_new_token:
-            self._token = self._credential.get_token(*self._scopes)
-        self._update_headers(request.http_request.headers, self._token.token)
+            scheme, self._token, _ = self._credential._token_retriever()
+        self._update_headers(request.http_request.headers, self._token)
 
 
 class AzureKeyCredentialPolicy(SansIOHTTPPolicy):
